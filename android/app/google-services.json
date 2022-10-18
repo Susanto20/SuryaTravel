@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "781657296386",
+    "project_id": "fir-flutter-demo-33e75",
+    "storage_bucket": "fir-flutter-demo-33e75.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:781657296386:android:9fa8846caf8f3467b1611b",
+        "android_client_info": {
+          "package_name": "com.susanto.surya_travel"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "781657296386-2325rk523ed3h6orvjsjt7qjgdbim6qk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.susanto.surya_travel",
+            "certificate_hash": "ed4d293ebef8b1d2f24e3459b542b04e80df7055"
+          }
+        },
+        {
+          "client_id": "781657296386-5igiblcvkr0mais21rrs1omtg6q8hn63.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBOnzb-NcBHq-JdF8eX9ds077jVjcVnBfk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "781657296386-5igiblcvkr0mais21rrs1omtg6q8hn63.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
