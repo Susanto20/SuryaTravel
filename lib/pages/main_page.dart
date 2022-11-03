@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:surya_travel/pages/login_page.dart';
 import 'package:surya_travel/pages/history_order_page.dart';
 import 'package:surya_travel/pages/profile_page.dart';
 import 'package:surya_travel/pages/sign_in_page.dart';
@@ -14,15 +13,13 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  var emailController = TextEditingController(text: '');
-  var noHpController = TextEditingController(text: '');
   var totalBayar;
-  var valueTujuan;
   var valueJam;
+  var valueTujuan;
   var valueKursi;
   int hargaTiket = 180000;
   List tujuanList = ['Pontianak', 'Sambas'];
-  List? jamList = [
+  List jamList = [
     '00.00',
     '02.00',
     '04.00',
@@ -36,10 +33,8 @@ class _MainPageState extends State<MainPage> {
     '20.00',
     '22.00',
   ];
-
-  DateTime dateTime = DateTime(2022);
+  DateTime dateTime = DateTime.now();
   bool isTrue = false;
-  TextEditingController nama = TextEditingController();
 
   logOut() async {
     SpUtil.clear();
@@ -83,7 +78,7 @@ class _MainPageState extends State<MainPage> {
                           height: 20,
                         ),
                         Text(
-                          'Tujuan : ${valueTujuan}',
+                          'Tujuan : $valueTujuan',
                           style: textAbuStyle,
                         ),
                         Text(
@@ -91,7 +86,7 @@ class _MainPageState extends State<MainPage> {
                           style: textAbuStyle,
                         ),
                         Text(
-                          'Jam : ${valueJam}',
+                          'Jam : $valueJam',
                           style: textAbuStyle,
                         ),
                         Text(
@@ -131,7 +126,6 @@ class _MainPageState extends State<MainPage> {
                                   MaterialPageRoute(
                                     builder: (context) {
                                       return UploadBuktiPage(
-                                        nama: nama.text,
                                         valueTujuan: valueTujuan,
                                         valueJam: valueJam,
                                         dateTime: dateTime.day.toString(),
@@ -164,10 +158,7 @@ class _MainPageState extends State<MainPage> {
     }
 
     Future saveData() async {
-      if (nama.text == '' ||
-          valueTujuan == '' ||
-          valueJam == '' ||
-          valueKursi == '') {
+      if (valueTujuan == null || valueJam == null || valueKursi == null) {
         return showDialog(
             context: context,
             builder: (context) {
@@ -195,13 +186,12 @@ class _MainPageState extends State<MainPage> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        resizeToAvoidBottomInset: false,
         backgroundColor: warnaAbu,
         appBar: AppBar(
           centerTitle: true,
           backgroundColor: warnaBiru,
           title: Text(
-            'Surya Travel',
+            'Form Pesanan',
             style: warnaPutihStyle.copyWith(
               fontSize: 22,
               fontWeight: FontWeight.w600,
@@ -275,13 +265,12 @@ class _MainPageState extends State<MainPage> {
                     MaterialPageRoute(
                       builder: (context) {
                         return HistoryOrderPage(
-                          nama: nama.toString(),
-                          dateTime: dateTime.toString(),
-                          valueTujuan: valueTujuan.toString(),
-                          valueJam: valueJam.toString(),
-                          valueKursi: valueKursi.toString(),
-                          totalBayar: totalBayar.toString(),
-                        );
+                            // dateTime: dateTime.day.toString(),
+                            // valueTujuan: valueTujuan.toString(),
+                            // valueJam: valueJam.toString(),
+                            // valueKursi: valueKursi.toString(),
+                            // totalBayar: totalBayar.toString(),
+                            );
                       },
                     ),
                   );
@@ -347,313 +336,291 @@ class _MainPageState extends State<MainPage> {
             ],
           ),
         ),
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(
-              height: 15,
-            ),
-            Container(
-              margin: EdgeInsets.symmetric(
-                horizontal: 25,
+        body: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(
+                height: 15,
               ),
-              child: Text(
-                'No Handphone',
-                style: textAbuStyle.copyWith(
-                  fontSize: 18,
+              Container(
+                margin: EdgeInsets.symmetric(
+                  horizontal: 25,
                 ),
               ),
-            ),
-            SizedBox(
-              height: 3,
-            ),
-            Container(
-              padding: EdgeInsets.only(
-                left: 10,
+              SizedBox(
+                height: 3,
               ),
-              margin: EdgeInsets.symmetric(
-                horizontal: 25,
-              ),
-              child: TextField(
-                keyboardType: TextInputType.numberWithOptions(),
-                controller: nama,
-                style: warnaHitamStyle,
-                decoration: InputDecoration(
-                  hintStyle: warnaHitamStyle,
-                  border: InputBorder.none,
+              Container(
+                margin: EdgeInsets.symmetric(
+                  horizontal: 25,
+                ),
+                child: Text(
+                  'Lokasi Tujuan',
+                  style: warnaHitamStyle.copyWith(
+                    fontSize: 18,
+                  ),
                 ),
               ),
-              decoration: BoxDecoration(
-                border: Border.all(
-                  color: warnaPutih,
-                  width: 1,
+              SizedBox(
+                height: 3,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 25,
                 ),
-                borderRadius: BorderRadius.circular(
-                  15,
+                child: Container(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 10,
+                  ),
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: warnaPutih,
+                      width: 1,
+                    ),
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  child: DropdownButton(
+                    hint: Text(
+                      'Pilih Lokasi Tujuan',
+                      style: textAbuStyle,
+                    ),
+                    icon: Icon(Icons.arrow_drop_down),
+                    isExpanded: true,
+                    underline: SizedBox(),
+                    value: valueTujuan,
+                    onChanged: (valueTujuanBaru) {
+                      setState(() {
+                        valueTujuan = valueTujuanBaru.toString();
+                      });
+                    },
+                    items: tujuanList.map((valueItemTujuan) {
+                      return DropdownMenuItem(
+                          child: Text(valueItemTujuan), value: valueItemTujuan);
+                    }).toList(),
+                  ),
                 ),
               ),
-            ),
-            Container(
-              margin: EdgeInsets.symmetric(
-                horizontal: 25,
+              SizedBox(
+                height: 10,
               ),
-              child: Text(
-                'Lokasi Tujuan',
-                style: textAbuStyle.copyWith(
-                  fontSize: 18,
+              Container(
+                margin: EdgeInsets.symmetric(
+                  horizontal: 25,
+                ),
+                child: Text(
+                  'Tanggal Keberangkatan',
+                  style: warnaHitamStyle.copyWith(
+                    fontSize: 18,
+                  ),
                 ),
               ),
-            ),
-            SizedBox(
-              height: 3,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 25,
+              SizedBox(
+                height: 3,
               ),
-              child: Container(
+              Container(
                 padding: EdgeInsets.symmetric(
-                  horizontal: 10,
+                  horizontal: 25,
                 ),
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: warnaPutih,
-                    width: 1,
-                  ),
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                child: DropdownButton(
-                  hint: Text(
-                    'Pilih Lokasi Tujuan',
-                    style: warnaHitamStyle,
-                  ),
-                  icon: Icon(Icons.arrow_drop_down),
-                  isExpanded: true,
-                  underline: SizedBox(),
-                  value: valueTujuan,
-                  onChanged: (valueTujuanBaru) {
-                    setState(() {
-                      valueTujuan = valueTujuanBaru;
-                    });
-                  },
-                  items: tujuanList.map((valueItem) {
-                    return DropdownMenuItem(
-                        child: Text(valueItem), value: valueItem);
-                  }).toList(),
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Container(
-              margin: EdgeInsets.symmetric(
-                horizontal: 25,
-              ),
-              child: Text(
-                'Tanggal Keberangkatan',
-                style: textAbuStyle.copyWith(
-                  fontSize: 18,
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 3,
-            ),
-            Container(
-              padding: EdgeInsets.symmetric(
-                horizontal: 25,
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    child: Container(
-                      height: 40,
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: warnaPutih,
-                          width: 1,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: Container(
+                        height: 40,
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: warnaPutih,
+                            width: 1,
+                          ),
+                          borderRadius: BorderRadius.circular(10),
                         ),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Column(
-                        children: [
-                          SizedBox(
-                            height: 8,
-                          ),
-                          Text(
-                            '${dateTime.day}-${dateTime.month}-${dateTime.year}',
-                            style: warnaHitamStyle.copyWith(),
-                            textAlign: TextAlign.center,
-                          ),
-                        ],
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              height: 8,
+                            ),
+                            Text(
+                              '${dateTime.day}-${dateTime.month}-${dateTime.year}',
+                              style: textAbuStyle.copyWith(),
+                              textAlign: TextAlign.center,
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                  SizedBox(
-                    width: 20,
-                  ),
-                  ElevatedButton(
-                      style: TextButton.styleFrom(
-                          backgroundColor: warnaBiru,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          )),
-                      onPressed: () async {
-                        DateTime? newData = await showDatePicker(
-                            context: context,
-                            initialDate: dateTime,
-                            firstDate: DateTime(2022),
-                            lastDate: DateTime(2023));
-                        if (newData != null) {
-                          setState(() {
-                            dateTime = newData;
-                          });
-                        }
-                      },
-                      child: Text(
-                        'Pilih Tanggal',
-                        style: warnaPutihStyle,
-                      )),
-                ],
-              ),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Container(
-              margin: EdgeInsets.symmetric(
-                horizontal: 25,
-              ),
-              child: Text(
-                'Jam Keberangkatan',
-                style: textAbuStyle.copyWith(
-                  fontSize: 18,
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 3,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 25,
-              ),
-              child: Container(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 10,
-                ),
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: warnaPutih,
-                    width: 1,
-                  ),
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                child: DropdownButton(
-                  hint: Text(
-                    'Pilih Jam',
-                    style: warnaHitamStyle,
-                  ),
-                  icon: Icon(Icons.arrow_drop_down),
-                  isExpanded: true,
-                  underline: SizedBox(),
-                  value: valueJam,
-                  onChanged: (valueJamBaru) {
-                    setState(() {
-                      valueJam = valueJamBaru;
-                    });
-                  },
-                  items: jamList!.map((valueItem) {
-                    return DropdownMenuItem(
-                        child: Text(valueItem), value: valueItem);
-                  }).toList(),
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Container(
-              margin: EdgeInsets.symmetric(
-                horizontal: 25,
-              ),
-              child: Text(
-                'Jumlah Kursi',
-                style: textAbuStyle.copyWith(
-                  fontSize: 18,
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 3,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 25,
-              ),
-              child: Container(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 10,
-                ),
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: warnaPutih,
-                    width: 1,
-                  ),
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                child: DropdownButton<int>(
-                  hint: Text("Pilih Jumlah Kursi"),
-                  underline: SizedBox(),
-                  isExpanded: true,
-                  value: valueKursi,
-                  items: <int>[1, 2, 3, 4, 5, 6].map((int value) {
-                    return new DropdownMenuItem<int>(
-                      value: value,
-                      child: new Text(value.toString()),
-                    );
-                  }).toList(),
-                  onChanged: (valueKursiBaru) {
-                    print(valueKursi);
-                    setState(() {
-                      valueKursi = valueKursiBaru;
-                      totalBayar = valueKursi * hargaTiket;
-                    });
-                  },
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Container(
-              width: double.infinity,
-              margin: EdgeInsets.symmetric(
-                horizontal: 25,
-              ),
-              child: TextButton(
-                  onPressed: () {
-                    setState(() {
-                      saveData();
-                    });
-                  },
-                  style: TextButton.styleFrom(
-                      backgroundColor: warnaBiru,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      )),
-                  child: Text(
-                    'Pesan',
-                    style: TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
+                    SizedBox(
+                      width: 20,
                     ),
-                  )),
-            ),
-          ],
+                    ElevatedButton(
+                        style: TextButton.styleFrom(
+                            backgroundColor: warnaBiru,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            )),
+                        onPressed: () async {
+                          DateTime? newData = await showDatePicker(
+                              context: context,
+                              initialDate: dateTime,
+                              firstDate: DateTime(2022),
+                              lastDate: DateTime(2023));
+                          if (newData != null) {
+                            setState(() {
+                              dateTime = newData;
+                            });
+                          }
+                        },
+                        child: Text(
+                          'Pilih Tanggal',
+                          style: warnaPutihStyle,
+                        )),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Container(
+                margin: EdgeInsets.symmetric(
+                  horizontal: 25,
+                ),
+                child: Text(
+                  'Jam Keberangkatan',
+                  style: warnaHitamStyle.copyWith(
+                    fontSize: 18,
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 3,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 25,
+                ),
+                child: Container(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 10,
+                  ),
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: warnaPutih,
+                      width: 1,
+                    ),
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  child: DropdownButton(
+                    hint: Text(
+                      'Pilih Jam',
+                      style: textAbuStyle,
+                    ),
+                    icon: Icon(Icons.arrow_drop_down),
+                    isExpanded: true,
+                    underline: SizedBox(),
+                    value: valueJam,
+                    onChanged: (valueJamBaru) {
+                      setState(() {
+                        valueJam = valueJamBaru as String;
+                      });
+                    },
+                    items: jamList.map((valueItem) {
+                      return DropdownMenuItem(
+                          child: Text(valueItem), value: valueItem);
+                    }).toList(),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Container(
+                margin: EdgeInsets.symmetric(
+                  horizontal: 25,
+                ),
+                child: Text(
+                  'Jumlah Kursi',
+                  style: warnaHitamStyle.copyWith(
+                    fontSize: 18,
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 3,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 25,
+                ),
+                child: Container(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 10,
+                  ),
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: warnaPutih,
+                      width: 1,
+                    ),
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  child: DropdownButton<int>(
+                    hint: Text(
+                      "Pilih Jumlah Kursi",
+                      style: textAbuStyle,
+                    ),
+                    underline: SizedBox(),
+                    isExpanded: true,
+                    value: valueKursi,
+                    onChanged: (valueKursiBaru) {
+                      print(valueKursiBaru);
+                      setState(() {
+                        valueKursi = valueKursiBaru as int;
+                        totalBayar = valueKursi * hargaTiket;
+                      });
+                    },
+                    items: <int>[1, 2, 3, 4, 5, 6].map((int valueKursi) {
+                      return DropdownMenuItem<int>(
+                        value: valueKursi,
+                        child: Text(valueKursi.toString()),
+                      );
+                    }).toList(),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Container(
+                width: double.infinity,
+                margin: EdgeInsets.symmetric(
+                  horizontal: 25,
+                ),
+                child: TextButton(
+                    onPressed: () {
+                      setState(() {
+                        print('Tujuan : ${valueTujuan}');
+                        print('Tanggal : ${dateTime.toString()}');
+                        print('Jam : ${valueJam}');
+                        print('Jumlah Kursi : ${valueKursi}');
+                        saveData();
+                      });
+                    },
+                    style: TextButton.styleFrom(
+                        backgroundColor: warnaBiru,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        )),
+                    child: Text(
+                      'Pesan',
+                      style: TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    )),
+              ),
+            ],
+          ),
         ),
       ),
     );

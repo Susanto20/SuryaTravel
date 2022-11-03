@@ -10,9 +10,9 @@ class Coba extends StatefulWidget {
 }
 
 class _CobaState extends State<Coba> {
-  late String stringResponse;
+  // late String stringResponse;
 
-  late List listResponse;
+  var listResponse;
 
   Future fetchData() async {
     http.Response response;
@@ -21,6 +21,7 @@ class _CobaState extends State<Coba> {
     if (response.statusCode == 200) {
       setState(() {
         listResponse = jsonDecode(response.body);
+        // print(jsonDecode(response.body)['tweet']);
       });
     }
   }

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:surya_travel/pages/edit_profile_page.dart';
-import 'package:surya_travel/pages/main_page.dart';
 import 'package:surya_travel/theme.dart';
+import 'package:sp_util/sp_util.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -19,8 +19,8 @@ class _ProfilePageState extends State<ProfilePage> {
   _muatUpdate() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     setState(() {
-      _nama = (pref.getString('upNama') ?? '');
-      _nomor = (pref.getString('upNo') ?? '');
+      _nama = (pref.getString('upNama') ?? '' + SpUtil.getString('name')!);
+      _nomor = (pref.getString('upNo') ?? '' + SpUtil.getString('nomor_hp')!);
       _alamat = (pref.getString('upAlamat') ?? '');
     });
   }

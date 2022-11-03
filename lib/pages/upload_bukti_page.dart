@@ -1,22 +1,25 @@
+import 'dart:convert';
 import 'dart:io';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sp_util/sp_util.dart';
 import 'package:surya_travel/pages/history_order_page.dart';
 import 'package:surya_travel/theme.dart';
+import 'package:http/http.dart' as http;
 
 class UploadBuktiPage extends StatefulWidget {
-  String? valueTujuan;
-  String? valueJam;
-  String? dateTime;
-  String? valueKursi;
-  String? nama;
-  String? totalBayar;
+  String valueTujuan;
+  String valueJam;
+  String dateTime;
+  String valueKursi;
+  String totalBayar;
 
   UploadBuktiPage({
     required this.valueTujuan,
     required this.valueJam,
     required this.dateTime,
-    required this.nama,
     required this.valueKursi,
     required this.totalBayar,
   });
@@ -29,12 +32,46 @@ class _UploadBuktiPageState extends State<UploadBuktiPage> {
   File? image;
   Future getImage() async {
     final ImagePicker _picker = ImagePicker();
-
     final XFile? imagePicked =
         await _picker.pickImage(source: ImageSource.gallery);
     image = File(imagePicked!.path);
     setState(() {});
   }
+
+  // void simpanData() async {
+  //   final pref = await SharedPreferences.getInstance();
+
+  //   var valueTujuan = widget.valueTujuan;
+  //   var dateTime = widget.dateTime;
+  //   var valuejam = widget.valueJam;
+  //   var valueKursi = widget.valueKursi;
+  //   var totalBayar = widget.totalBayar;
+
+  //   final dataOrder = json.encode({
+  //     'valueTujuan': valueTujuan,
+  //     'dateTime': dateTime,
+  //     'valueJam': valuejam,
+  //     'valueKursi': valueKursi,
+  //     'totalBayar': totalBayar,
+  //   });
+
+  //   pref.setString(dataOrder, dataOrder);
+
+  //   setState(() {});
+  // }
+
+  // void ambilData() async {
+  //   final pref = await SharedPreferences.getInstance();
+
+  //   final dataOrder =
+  //       json.decode(pref.getString('dataOrder')) as Map<String, dynamic>;
+
+  //   'valueTujuan' = dataOrder['valueTujuan'];
+  //   'dateTime' = dataOrder['dateTime'];
+  //   'valueJam' = dataOrder['valueJam'];
+  //   'valueKursi' = dataOrder['valueKursi'];
+  //   'totalBayar' = dataOrder['totalBayar'];
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +79,7 @@ class _UploadBuktiPageState extends State<UploadBuktiPage> {
       return showDialog(
           context: context,
           builder: (BuildContext context) => Container(
-                width: 350,
+                width: 280,
                 child: AlertDialog(
                   backgroundColor: warnaPutih,
                   shape: RoundedRectangleBorder(
@@ -58,21 +95,27 @@ class _UploadBuktiPageState extends State<UploadBuktiPage> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              'Nomor Antrian : ',
-                              style: warnaHitamStyle,
+                              'Antrian Verifikasi Pembayaran : ',
+                              overflow: TextOverflow.ellipsis,
+                              style: warnaHitamStyle.copyWith(fontSize: 14),
                             ),
                             Text(
                               '1',
-                              style: warnaHitamStyle,
+                              style: warnaHitamStyle.copyWith(fontSize: 14),
+                              overflow: TextOverflow.ellipsis,
                             ),
                           ],
                         ),
                         SizedBox(
-                          height: 20,
+                          height: 10,
                         ),
-                        Text(
-                          'Mohon menunggu sebentar, anda sedang dalam antrian verfikasi pembayaran oleh admin, terima kasih.',
-                          style: warnaHitamStyle,
+                        Center(
+                          child: Text(
+                            'Mohon menunggu sebentar, anda sedang dalam antrian verfikasi pembayaran oleh admin, terima kasih.',
+                            style: warnaHitamStyle.copyWith(
+                              fontSize: 14,
+                            ),
+                          ),
                         ),
                         SizedBox(
                           height: 20,
@@ -84,19 +127,18 @@ class _UploadBuktiPageState extends State<UploadBuktiPage> {
                               MaterialPageRoute(
                                 builder: (context) {
                                   return HistoryOrderPage(
-                                    nama: widget.nama,
-                                    valueTujuan: widget.valueTujuan,
-                                    valueJam: widget.valueJam,
-                                    dateTime: widget.dateTime,
-                                    valueKursi: widget.valueKursi,
-                                    totalBayar: widget.totalBayar,
-                                  );
+                                      // valueTujuan: widget.valueTujuan,
+                                      // valueJam: widget.valueJam,
+                                      // dateTime: widget.dateTime,
+                                      // valueKursi: widget.valueKursi,
+                                      // totalBayar: widget.totalBayar,
+                                      );
                                 },
                               ),
                             );
                           },
                           child: Container(
-                            height: 100,
+                            height: 90,
                             child: Image.asset(
                               'assets/images/checklist.png',
                             ),
@@ -131,6 +173,7 @@ class _UploadBuktiPageState extends State<UploadBuktiPage> {
               );
             });
       } else {
+        doPesan();
         showSuccesDialog();
       }
     }
@@ -250,9 +293,14 @@ class _UploadBuktiPageState extends State<UploadBuktiPage> {
               ),
               child: TextButton(
                   onPressed: () {
-                    setState(() {
-                      saveData();
-                    });
+                    // print('Tujuan : ${widget.valueTujuan}');
+                    // print('Tanggal : ${widget.dateTime}');
+                    // print('Jumlah Kursi : ${widget.valueKursi}');
+                    // print('Jam : ${widget.valueJam}');
+                    // print('Total Bayar : ${widget.totalBayar}');
+                    // print(image);
+                    saveData();
+                    // doPesan();
                   },
                   child: Text(
                     'Kirim',
@@ -266,5 +314,114 @@ class _UploadBuktiPageState extends State<UploadBuktiPage> {
         ),
       ),
     );
+  }
+
+  // _muatData() async {
+  //   SharedPreferences pref = await SharedPreferences.getInstance();
+  //   setState(() {
+  //     widget.valueTujuan = (pref.getString('valueTujuan') ?? '');
+  //     widget.dateTime = (pref.getString('datetime') ?? '');
+  //     widget.valueJam = (pref.getString('valueJam') ?? '');
+  //     widget.valueKursi = (pref.getString('valueKursi') ?? '');
+  //     widget.totalBayar = (pref.getString('TotalBayar') ?? '');
+  //   });
+  // }
+
+  Future doPesan() async {
+    String? tujuan = widget.valueTujuan;
+    String tanggal = widget.dateTime.toString();
+    String? jam = widget.valueJam;
+    String? kursi = widget.valueKursi;
+    String? total = widget.totalBayar;
+    print(total);
+    print(tujuan);
+
+    // if (tujuan == '' ||
+    //     tanggal.isEmpty ||
+    //     jam == '' ||
+    //     kursi == '' ||
+    //     total == '') {
+    //   showDialog(
+    //       context: context,
+    //       builder: (context) {
+    //         return AlertDialog(
+    //           title: Text(
+    //             "Data Kosong",
+    //             style: warnaHitamStyle,
+    //           ),
+    //           actions: [
+    //             TextButton(
+    //               onPressed: () => Navigator.pop(context),
+    //               child: Text(
+    //                 'Oke',
+    //                 style: warnaHitamStyle,
+    //               ),
+    //             ),
+    //           ],
+    //         );
+    //       });
+    // }
+
+    final response = await http.post(
+      Uri.parse(
+          'https://42b0-2001-448a-6080-4c83-f05f-38b5-dd9e-a08f.ap.ngrok.io/surya-travel/public/api/order/store'),
+      body: {
+        'tujuan': widget.valueTujuan,
+        'tanggal_berangkat': widget.dateTime,
+        'jam': widget.valueJam,
+        'jumlah_kursi': widget.valueKursi,
+        'total': widget.totalBayar,
+        'user_id': SpUtil.getString('id'),
+        // 'file': image,
+        'status': 'diterima',
+      },
+      // headers: {
+      //   'Accept': 'application/json',
+      //   'Content-Type': 'application/json'
+      // },
+    );
+
+    if (response.statusCode == 200) {
+      showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: Text(
+                "Data Berhasil Disimpan",
+                style: warnaHitamStyle,
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: Text(
+                    'Oke',
+                    style: warnaHitamStyle,
+                  ),
+                ),
+              ],
+            );
+          });
+      print(SpUtil.getString('id'));
+    } else {
+      showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: Text(
+                "Data Gagal Disimpan",
+                style: warnaHitamStyle,
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: Text(
+                    'Oke',
+                    style: warnaHitamStyle,
+                  ),
+                ),
+              ],
+            );
+          });
+    }
   }
 }

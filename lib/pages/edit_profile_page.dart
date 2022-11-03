@@ -15,10 +15,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
   TextEditingController hpController = TextEditingController();
   TextEditingController alamatController = TextEditingController();
 
-  var _nama = "No Name";
-  var _nomor = "No Number";
-  var _alamat = "No Adress";
-
   _updateNama(updateNama) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     setState(() {
@@ -42,11 +38,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
   _muatUpdate() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
-    setState(() {
-      _nama = (pref.getString('upNama') ?? '');
-      _nomor = (pref.getString('upNo') ?? '');
-      _alamat = (pref.getString('upAlamat') ?? '');
-    });
+    setState(() {});
   }
 
   Future<void> showSuccesDialog() async {

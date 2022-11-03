@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:surya_travel/coba.dart';
 import 'package:surya_travel/pages/main_page.dart';
 import 'package:surya_travel/pages/sign_in_page.dart';
-import 'package:surya_travel/pages/sign_up_page.dart';
 import 'package:surya_travel/providers/custom_auth.dart';
+import 'package:surya_travel/test.dart';
 import 'providers/custom_auth.dart';
 import 'package:sp_util/sp_util.dart';
 
@@ -27,6 +28,7 @@ class MyApp extends StatelessWidget {
       builder: (context, child) => MaterialApp(
         debugShowCheckedModeBanner: false,
         home: SpUtil.getBool('isLogin')! ? MainPage() : SignInPage(),
+        // home: Test(),
       ),
     );
   }

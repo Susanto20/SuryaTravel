@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:sp_util/sp_util.dart';
 import 'package:surya_travel/models/login_model.dart';
 import 'package:surya_travel/pages/main_page.dart';
@@ -181,24 +180,41 @@ class _SignInPageState extends State<SignInPage> {
 
   Future _doLogin() async {
     if (emailController.text.isEmpty || passwordController.text.isEmpty) {
-      Alert(
-              context: context,
-              title: 'Data Tidak Boleh Kosong',
-              type: AlertType.error)
-          .show();
+      // Alert(
+      //         context: context,
+      //         title: 'Data Tidak Boleh Kosong',
+      //         type: AlertType.error)
+      //     .show();
+      showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: Text(
+                "Data Tidak Boleh Kosong",
+                style: warnaHitamStyle,
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: Text(
+                    'Oke',
+                    style: warnaHitamStyle,
+                  ),
+                ),
+              ],
+            );
+          });
       return;
     }
 
     final response = await http.post(
-        Uri.parse(
-            'https://6afc-180-242-233-148.ap.ngrok.io/surya-travel/public/api/login'),
-        body: {
-          'email': emailController.text,
-          'password': passwordController.text,
-        },
-        headers: {
-          'Accept': 'application/json'
-        });
+      Uri.parse(
+          'https://42b0-2001-448a-6080-4c83-f05f-38b5-dd9e-a08f.ap.ngrok.io/surya-travel/public/api/login'),
+      body: {
+        'email': emailController.text,
+        'password': passwordController.text,
+      },
+    );
 
     if (response.statusCode == 200) {
       final loginModel = loginModelFromJson(response.body);
@@ -207,10 +223,15 @@ class _SignInPageState extends State<SignInPage> {
       // print('oke------------------');
       // print(jsonDecode(response.body)['data']['user']['name']);
       print(jsonDecode(response.body)['data']['token']);
+      print(jsonDecode(response.body)['data']['user']['id']);
       var token = loginModel.data?.token;
+      var id = loginModel.data?.user.id;
       SpUtil.putString('token', token!);
+      SpUtil.putString('id', id.toString());
       SpUtil.putBool('isLogin', true);
       SpUtil.putString('name', loginModel.data!.user.name!);
+      SpUtil.putString('nomor_hp', loginModel.data!.user.nomor_hp!);
+      SpUtil.putString('id', loginModel.data!.user.id.toString());
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -222,8 +243,27 @@ class _SignInPageState extends State<SignInPage> {
       // Alert(context: context, title: 'Login Berhasil', type: AlertType.success)
       //     .show();
     } else {
-      Alert(context: context, title: 'Login Gagal', type: AlertType.error)
-          .show();
+      // Alert(context: context, title: 'Login Gagal', type: AlertType.error)
+      //     .show();
+      showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: Text(
+                "Login Gagal",
+                style: warnaHitamStyle,
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: Text(
+                    'Oke',
+                    style: warnaHitamStyle,
+                  ),
+                ),
+              ],
+            );
+          });
     }
   }
 }
