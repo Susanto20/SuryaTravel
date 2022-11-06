@@ -4,13 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:surya_travel/pages/history_order_page.dart';
 import 'package:surya_travel/pages/main_page.dart';
 import 'package:surya_travel/theme.dart';
+import 'package:sp_util/sp_util.dart';
 
 class DetailOrderPage extends StatefulWidget {
+  final data;
+  const DetailOrderPage({required this.data});
+
   // String? valueTujuan;
   // String? valueJam;
   // String? dateTime;
   // String? valueKursi;
-
   // String? totalBayar;
 
   // DetailOrderPage({
@@ -26,13 +29,14 @@ class DetailOrderPage extends StatefulWidget {
 }
 
 class _DetailOrderPageState extends State<DetailOrderPage> {
-  final String apiUrl =
-      "https://42b0-2001-448a-6080-4c83-f05f-38b5-dd9e-a08f.ap.ngrok.io/surya-travel/public/api/order/show?uid=10";
+  // var uid = SpUtil.getString('id');
+  // final String apiUrl =
+  //     "https://4f30-180-242-214-37.ap.ngrok.io/surya-travel/public/api/order/show?uid=";
 
-  Future<List<dynamic>> _fecthDataUsers() async {
-    var result = await http.get(Uri.parse(apiUrl));
-    return json.decode(result.body);
-  }
+  // Future<List<dynamic>> _fecthDataUsers() async {
+  //   var result = await http.get(Uri.parse(apiUrl + uid!));
+  //   return json.decode(result.body);
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -106,186 +110,186 @@ class _DetailOrderPageState extends State<DetailOrderPage> {
             ),
           ),
         ),
-        body: Container(
-          child: FutureBuilder<List<dynamic>>(
-            future: _fecthDataUsers(),
-            builder: (BuildContext context, AsyncSnapshot snapshot) {
-              if (snapshot.hasData) {
-                return ListView.builder(
-                    padding: EdgeInsets.all(10),
-                    itemCount: snapshot.data.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Text(
-                            "Detail Pesanan",
-                            style: warnaBiruStyle.copyWith(
-                              fontSize: 18,
-                            ),
-                          ),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Text(
-                            'Lokasi Tujuan',
-                            style: warnaHitamStyle,
-                          ),
-                          Text(
-                            snapshot.data[index]['tujuan'].toString(),
-                            style: textAbuStyle,
-                          ),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Text(
-                            'Tanggal',
-                            style: warnaHitamStyle,
-                          ),
-                          Text(
-                            snapshot.data[index]['tanggal_berangkat']
-                                .toString(),
-                            style: textAbuStyle,
-                          ),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Text(
-                            'Jam Keberangkatan',
-                            style: warnaHitamStyle,
-                          ),
-                          Text(
-                            snapshot.data[index]['jam'].toString(),
-                            style: textAbuStyle,
-                          ),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Text(
-                            'Jumlah Kursi',
-                            style: warnaHitamStyle,
-                          ),
-                          Text(
-                            snapshot.data[index]['jumlah_kursi'].toString(),
-                            style: textAbuStyle,
-                          ),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Text(
-                            'Total Bayar',
-                            style: warnaHitamStyle,
-                          ),
-                          Text(
-                            snapshot.data[index]['total'].toString(),
-                            style: textAbuStyle,
-                          ),
-                          SizedBox(
-                            height: 30,
-                          ),
-                        ],
-                      );
-                    });
-              } else {
-                return Center(child: CircularProgressIndicator());
-              }
-            },
-          ),
-        ),
-        // body: Card(
-        //   elevation: 5,
-        //   margin: EdgeInsets.all(10),
-        //   child: ListView(
-        //     children: [
-        //       Container(
-        //         margin: EdgeInsets.symmetric(
-        //           horizontal: 15,
-        //         ),
-        //         child: Column(
-        //           crossAxisAlignment: CrossAxisAlignment.start,
-        //           children: [
-        //             SizedBox(
-        //               height: 5,
-        //             ),
-        //             Text(
-        //               "Detail Pesanan",
-        //               style: warnaBiruStyle.copyWith(
-        //                 fontSize: 18,
-        //               ),
-        //             ),
-        //             SizedBox(
-        //               height: 5,
-        //             ),
-        //             SizedBox(
-        //               height: 5,
-        //             ),
-        //             Text(
-        //               'Lokasi Tujuan',
-        //               style: warnaHitamStyle,
-        //             ),
-        //             // Text(
-        //             // widget.valueTujuan.toString(),
-        //             // style: textAbuStyle,
-        //             // ),
-        //             SizedBox(
-        //               height: 5,
-        //             ),
-        //             Text(
-        //               'Tanggal',
-        //               style: warnaHitamStyle,
-        //             ),
-        //             // Text(
-        //             //   widget.dateTime.toString(),
-        //             //   style: textAbuStyle,
-        //             // ),
-        //             SizedBox(
-        //               height: 5,
-        //             ),
-        //             Text(
-        //               'Jam Keberangkatan',
-        //               style: warnaHitamStyle,
-        //             ),
-        //             // Text(
-        //             //   widget.valueJam.toString(),
-        //             //   style: textAbuStyle,
-        //             // ),
-        //             SizedBox(
-        //               height: 5,
-        //             ),
-        //             Text(
-        //               'Jumlah Kursi',
-        //               style: warnaHitamStyle,
-        //             ),
-        //             // Text(
-        //             //   widget.valueKursi.toString(),
-        //             //   style: textAbuStyle,
-        //             // ),
-        //             SizedBox(
-        //               height: 5,
-        //             ),
-        //             Text(
-        //               'Total Bayar',
-        //               style: warnaHitamStyle,
-        //             ),
-        //             // Text(
-        //             //   widget.totalBayar.toString(),
-        //             //   style: textAbuStyle,
-        //             // ),
-        //             SizedBox(
-        //               height: 30,
-        //             ),
-        //           ],
-        //         ),
-        //       ),
-        //     ],
+        // body: Container(
+        //   child: FutureBuilder<List<dynamic>>(
+        //     // future: _fecthDataUsers(),
+        //     builder: (BuildContext context, AsyncSnapshot snapshot) {
+        //       if (snapshot.hasData) {
+        //         return ListView.builder(
+        //             padding: EdgeInsets.all(10),
+        //             itemCount: snapshot.data.length,
+        //             itemBuilder: (BuildContext context, int index) {
+        //               return Column(
+        //                 crossAxisAlignment: CrossAxisAlignment.start,
+        //                 children: [
+        //                   SizedBox(
+        //                     height: 5,
+        //                   ),
+        //                   Text(
+        //                     "Detail Pesanan",
+        //                     style: warnaBiruStyle.copyWith(
+        //                       fontSize: 18,
+        //                     ),
+        //                   ),
+        //                   SizedBox(
+        //                     height: 5,
+        //                   ),
+        //                   SizedBox(
+        //                     height: 5,
+        //                   ),
+        //                   Text(
+        //                     'Lokasi Tujuan',
+        //                     style: warnaHitamStyle,
+        //                   ),
+        //                   Text(
+        //                     widget.data[index]['tujuan'].toString(),
+        //                     style: textAbuStyle,
+        //                   ),
+        //                   SizedBox(
+        //                     height: 5,
+        //                   ),
+        //                   Text(
+        //                     'Tanggal',
+        //                     style: warnaHitamStyle,
+        //                   ),
+        //                   Text(
+        //                     snapshot.data[index]['tanggal_berangkat']
+        //                         .toString(),
+        //                     style: textAbuStyle,
+        //                   ),
+        //                   SizedBox(
+        //                     height: 5,
+        //                   ),
+        //                   Text(
+        //                     'Jam Keberangkatan',
+        //                     style: warnaHitamStyle,
+        //                   ),
+        //                   Text(
+        //                     snapshot.data[index]['jam'].toString(),
+        //                     style: textAbuStyle,
+        //                   ),
+        //                   SizedBox(
+        //                     height: 5,
+        //                   ),
+        //                   Text(
+        //                     'Jumlah Kursi',
+        //                     style: warnaHitamStyle,
+        //                   ),
+        //                   Text(
+        //                     snapshot.data[index]['jumlah_kursi'].toString(),
+        //                     style: textAbuStyle,
+        //                   ),
+        //                   SizedBox(
+        //                     height: 5,
+        //                   ),
+        //                   Text(
+        //                     'Total Bayar',
+        //                     style: warnaHitamStyle,
+        //                   ),
+        //                   Text(
+        //                     snapshot.data[index]['total'].toString(),
+        //                     style: textAbuStyle,
+        //                   ),
+        //                   SizedBox(
+        //                     height: 30,
+        //                   ),
+        //                 ],
+        //               );
+        //             });
+        //       } else {
+        //         return Center(child: CircularProgressIndicator());
+        //       }
+        //     },
         //   ),
         // ),
+        body: Card(
+          elevation: 5,
+          margin: EdgeInsets.all(10),
+          child: ListView(
+            children: [
+              Container(
+                margin: EdgeInsets.symmetric(
+                  horizontal: 15,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Text(
+                      "Detail Pesanan",
+                      style: warnaBiruStyle.copyWith(
+                        fontSize: 18,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Text(
+                      'Lokasi Tujuan',
+                      style: warnaHitamStyle,
+                    ),
+                    Text(
+                      widget.data['tujuan'].toString(),
+                      style: textAbuStyle,
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Text(
+                      'Tanggal',
+                      style: warnaHitamStyle,
+                    ),
+                    Text(
+                      widget.data['tanggal_berangkat'].toString(),
+                      style: textAbuStyle,
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Text(
+                      'Jam Keberangkatan',
+                      style: warnaHitamStyle,
+                    ),
+                    Text(
+                      widget.data['jam'].toString(),
+                      style: textAbuStyle,
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Text(
+                      'Jumlah Kursi',
+                      style: warnaHitamStyle,
+                    ),
+                    Text(
+                      widget.data['jumlah_kursi'].toString(),
+                      style: textAbuStyle,
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Text(
+                      'Total Bayar',
+                      style: warnaHitamStyle,
+                    ),
+                    Text(
+                      widget.data['total'].toString(),
+                      style: textAbuStyle,
+                    ),
+                    SizedBox(
+                      height: 30,
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
         bottomNavigationBar: Container(
           width: double.infinity,
           margin: EdgeInsets.symmetric(

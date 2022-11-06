@@ -19,11 +19,15 @@ class HistoryOrderPage extends StatelessWidget {
   //   required this.valueKursi,
   //   required this.totalBayar,
   // });
+  var uid = SpUtil.getString('id');
   final String apiUrl =
-      "https://42b0-2001-448a-6080-4c83-f05f-38b5-dd9e-a08f.ap.ngrok.io/surya-travel/public/api/order/show?uid=18";
+      "https://e878-202-67-35-8.ap.ngrok.io/surya-travel/public/api/order/show?uid=";
+
+  HistoryOrderPage({Key? key}) : super(key: key);
 
   Future<List<dynamic>> _fecthDataUsers() async {
-    var result = await http.get(Uri.parse(apiUrl));
+    var result = await http.get(Uri.parse(apiUrl + uid!));
+    print(result.body);
     return json.decode(result.body);
   }
 
@@ -62,11 +66,13 @@ class HistoryOrderPage extends StatelessWidget {
                   itemBuilder: (BuildContext context, int index) {
                     return GestureDetector(
                       onTap: () {
+                        // print(SpUtil.getString('id'));
                         Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder: (context) {
-                              return DetailOrderPage();
+                              return DetailOrderPage(
+                                  data: snapshot.data[index]);
                             },
                           ),
                         );

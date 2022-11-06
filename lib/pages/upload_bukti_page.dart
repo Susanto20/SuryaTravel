@@ -91,6 +91,13 @@ class _UploadBuktiPageState extends State<UploadBuktiPage> {
                         SizedBox(
                           height: 5,
                         ),
+                        Text(
+                          'Data Terkirim',
+                          style: warnaHitamStyle.copyWith(fontSize: 18),
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -112,6 +119,7 @@ class _UploadBuktiPageState extends State<UploadBuktiPage> {
                         Center(
                           child: Text(
                             'Mohon menunggu sebentar, anda sedang dalam antrian verfikasi pembayaran oleh admin, terima kasih.',
+                            textAlign: TextAlign.justify,
                             style: warnaHitamStyle.copyWith(
                               fontSize: 14,
                             ),
@@ -174,7 +182,7 @@ class _UploadBuktiPageState extends State<UploadBuktiPage> {
             });
       } else {
         doPesan();
-        showSuccesDialog();
+        // showSuccesDialog();
       }
     }
 
@@ -364,7 +372,7 @@ class _UploadBuktiPageState extends State<UploadBuktiPage> {
 
     final response = await http.post(
       Uri.parse(
-          'https://42b0-2001-448a-6080-4c83-f05f-38b5-dd9e-a08f.ap.ngrok.io/surya-travel/public/api/order/store'),
+          'https://e878-202-67-35-8.ap.ngrok.io/surya-travel/public/api/order/store'),
       body: {
         'tujuan': widget.valueTujuan,
         'tanggal_berangkat': widget.dateTime,
@@ -382,25 +390,108 @@ class _UploadBuktiPageState extends State<UploadBuktiPage> {
     );
 
     if (response.statusCode == 200) {
+      // showDialog(
+      //     context: context,
+      //     builder: (context) {
+      //       return AlertDialog(
+      //         title: Text(
+      //           "Data Berhasil Disimpan",
+      //           style: warnaHitamStyle,
+      //         ),
+      //         actions: [
+      //           TextButton(
+      //             onPressed: () => Navigator.pop(context),
+      //             child: Text(
+      //               'Oke',
+      //               style: warnaHitamStyle,
+      //             ),
+      //           ),
+      //         ],
+      //       );
+      //     });
+
       showDialog(
           context: context,
-          builder: (context) {
-            return AlertDialog(
-              title: Text(
-                "Data Berhasil Disimpan",
-                style: warnaHitamStyle,
-              ),
-              actions: [
-                TextButton(
-                  onPressed: () => Navigator.pop(context),
-                  child: Text(
-                    'Oke',
-                    style: warnaHitamStyle,
+          builder: (BuildContext context) => Container(
+                width: 280,
+                child: AlertDialog(
+                  backgroundColor: warnaPutih,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  content: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Text(
+                          'Data Terkirim',
+                          style: warnaHitamStyle.copyWith(fontSize: 18),
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'Antrian Verifikasi Pembayaran : ',
+                              overflow: TextOverflow.ellipsis,
+                              style: warnaHitamStyle.copyWith(fontSize: 14),
+                            ),
+                            Text(
+                              '1',
+                              style: warnaHitamStyle.copyWith(fontSize: 14),
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Center(
+                          child: Text(
+                            'Mohon menunggu sebentar, anda sedang dalam antrian verfikasi pembayaran oleh admin, terima kasih.',
+                            textAlign: TextAlign.justify,
+                            style: warnaHitamStyle.copyWith(
+                              fontSize: 14,
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) {
+                                  return HistoryOrderPage(
+                                      // valueTujuan: widget.valueTujuan,
+                                      // valueJam: widget.valueJam,
+                                      // dateTime: widget.dateTime,
+                                      // valueKursi: widget.valueKursi,
+                                      // totalBayar: widget.totalBayar,
+                                      );
+                                },
+                              ),
+                            );
+                          },
+                          child: Container(
+                            height: 90,
+                            child: Image.asset(
+                              'assets/images/checklist.png',
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              ],
-            );
-          });
+              ));
+
       print(SpUtil.getString('id'));
     } else {
       showDialog(

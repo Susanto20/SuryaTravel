@@ -82,7 +82,10 @@ class _MainPageState extends State<MainPage> {
                           style: textAbuStyle,
                         ),
                         Text(
-                          'Tanggal : ${dateTime.day.toString()}-${dateTime.month.toString()}-${dateTime.year.toString()}',
+                          // 'Tanggal : ${dateTime.day.toString()}-${dateTime.month.toString()}-${dateTime.year.toString()}',
+                          'Tanggal : ${dateTime}',
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
                           style: textAbuStyle,
                         ),
                         Text(
@@ -128,7 +131,7 @@ class _MainPageState extends State<MainPage> {
                                       return UploadBuktiPage(
                                         valueTujuan: valueTujuan,
                                         valueJam: valueJam,
-                                        dateTime: dateTime.day.toString(),
+                                        dateTime: dateTime.toString(),
                                         valueKursi: valueKursi.toString(),
                                         totalBayar: totalBayar.toString(),
                                       );
@@ -265,6 +268,7 @@ class _MainPageState extends State<MainPage> {
                     MaterialPageRoute(
                       builder: (context) {
                         return HistoryOrderPage(
+
                             // dateTime: dateTime.day.toString(),
                             // valueTujuan: valueTujuan.toString(),
                             // valueJam: valueJam.toString(),
