@@ -268,7 +268,7 @@ class _SignUpPageState extends State<SignUpPage> {
     }
     final response = await http.post(
       Uri.parse(
-          'https://4f30-180-242-214-37.ap.ngrok.io/surya-travel/api/user/register'),
+          'https://bd67-202-67-35-22.ap.ngrok.io/surya-travel/public/api/user/register'),
       body: {
         'name': name,
         'email': email,

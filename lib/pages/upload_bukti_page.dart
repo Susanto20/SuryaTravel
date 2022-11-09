@@ -343,6 +343,7 @@ class _UploadBuktiPageState extends State<UploadBuktiPage> {
     String? total = widget.totalBayar;
     print(total);
     print(tujuan);
+    print(image);
 
     // if (tujuan == '' ||
     //     tanggal.isEmpty ||
@@ -372,7 +373,7 @@ class _UploadBuktiPageState extends State<UploadBuktiPage> {
 
     final response = await http.post(
       Uri.parse(
-          'https://e878-202-67-35-8.ap.ngrok.io/surya-travel/public/api/order/store'),
+          'https://bd67-202-67-35-22.ap.ngrok.io/surya-travel/public/api/order/store'),
       body: {
         'tujuan': widget.valueTujuan,
         'tanggal_berangkat': widget.dateTime,
@@ -380,8 +381,8 @@ class _UploadBuktiPageState extends State<UploadBuktiPage> {
         'jumlah_kursi': widget.valueKursi,
         'total': widget.totalBayar,
         'user_id': SpUtil.getString('id'),
-        // 'file': image,
-        'status': 'diterima',
+        'file': image.toString(),
+        'status': 'Masuk',
       },
       // headers: {
       //   'Accept': 'application/json',

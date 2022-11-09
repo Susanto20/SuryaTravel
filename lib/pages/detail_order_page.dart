@@ -109,6 +109,21 @@ class _DetailOrderPageState extends State<DetailOrderPage> {
               Icons.arrow_back,
             ),
           ),
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.check),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return MainPage();
+                    },
+                  ),
+                );
+              },
+            ),
+          ],
         ),
         // body: Container(
         //   child: FutureBuilder<List<dynamic>>(
@@ -290,29 +305,29 @@ class _DetailOrderPageState extends State<DetailOrderPage> {
             ],
           ),
         ),
-        bottomNavigationBar: Container(
-          width: double.infinity,
-          margin: EdgeInsets.symmetric(
-            horizontal: 15,
-          ),
-          child: TextButton(
-              onPressed: () {
-                showSuccesDialog();
-              },
-              style: TextButton.styleFrom(
-                  backgroundColor: warnaBiru,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  )),
-              child: Text(
-                'Selesai',
-                style: TextStyle(
-                  fontSize: 22,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
-              )),
-        ),
+        // bottomNavigationBar: Container(
+        //   width: double.infinity,
+        //   margin: EdgeInsets.symmetric(
+        //     horizontal: 15,
+        //   ),
+        //   child: TextButton(
+        //       onPressed: () {
+        //         showSuccesDialog();
+        //       },
+        //       style: TextButton.styleFrom(
+        //           backgroundColor: warnaBiru,
+        //           shape: RoundedRectangleBorder(
+        //             borderRadius: BorderRadius.circular(12),
+        //           )),
+        //       child: Text(
+        //         'Selesai',
+        //         style: TextStyle(
+        //           fontSize: 22,
+        //           fontWeight: FontWeight.bold,
+        //           color: Colors.white,
+        //         ),
+        //       )),
+        // ),
       ),
     );
   }

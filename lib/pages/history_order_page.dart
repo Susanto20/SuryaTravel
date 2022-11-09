@@ -5,25 +5,19 @@ import 'package:surya_travel/theme.dart';
 import 'package:http/http.dart' as http;
 import 'package:sp_util/sp_util.dart';
 
-class HistoryOrderPage extends StatelessWidget {
-  // String? valueTujuan;
-  // String? valueJam;
-  // String? dateTime;
-  // String? valueKursi;
-  // String? totalBayar;
-
-  // HistoryOrderPage({
-  //   required this.valueTujuan,
-  //   required this.valueJam,
-  //   required this.dateTime,
-  //   required this.valueKursi,
-  //   required this.totalBayar,
-  // });
-  var uid = SpUtil.getString('id');
-  final String apiUrl =
-      "https://e878-202-67-35-8.ap.ngrok.io/surya-travel/public/api/order/show?uid=";
-
+class HistoryOrderPage extends StatefulWidget {
   HistoryOrderPage({Key? key}) : super(key: key);
+
+  @override
+  State<HistoryOrderPage> createState() => _HistoryOrderPageState();
+}
+
+class _HistoryOrderPageState extends State<HistoryOrderPage> {
+  // String? valueTujuan;
+  var uid = SpUtil.getString('id');
+
+  final String apiUrl =
+      "https://bd67-202-67-35-22.ap.ngrok.io/surya-travel/public/api/order/show?uid=";
 
   Future<List<dynamic>> _fecthDataUsers() async {
     var result = await http.get(Uri.parse(apiUrl + uid!));
@@ -54,6 +48,14 @@ class HistoryOrderPage extends StatelessWidget {
             Icons.arrow_back,
           ),
         ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.refresh),
+            onPressed: () {
+              setState(() {});
+            },
+          ),
+        ],
       ),
       body: Container(
         child: FutureBuilder<List<dynamic>>(
