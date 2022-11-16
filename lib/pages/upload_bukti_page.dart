@@ -102,14 +102,9 @@ class _UploadBuktiPageState extends State<UploadBuktiPage> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              'Antrian Verifikasi Pembayaran : ',
+                              'Antrian Verifikasi Pembayaran',
                               overflow: TextOverflow.ellipsis,
                               style: warnaHitamStyle.copyWith(fontSize: 14),
-                            ),
-                            Text(
-                              '1',
-                              style: warnaHitamStyle.copyWith(fontSize: 14),
-                              overflow: TextOverflow.ellipsis,
                             ),
                           ],
                         ),
@@ -337,13 +332,12 @@ class _UploadBuktiPageState extends State<UploadBuktiPage> {
 
   Future doPesan() async {
     String? tujuan = widget.valueTujuan;
-    String tanggal = widget.dateTime.toString();
+    String tanggal = widget.dateTime.toString().replaceAll('00:00:00.000', '');
     String? jam = widget.valueJam;
     String? kursi = widget.valueKursi;
     String? total = widget.totalBayar;
-    print(total);
-    print(tujuan);
-    print(image);
+
+    print(image!);
 
     // if (tujuan == '' ||
     //     tanggal.isEmpty ||
@@ -370,25 +364,19 @@ class _UploadBuktiPageState extends State<UploadBuktiPage> {
     //         );
     //       });
     // }
-
     final response = await http.post(
-      Uri.parse(
-          'https://bd67-202-67-35-22.ap.ngrok.io/surya-travel/public/api/order/store'),
-      body: {
-        'tujuan': widget.valueTujuan,
-        'tanggal_berangkat': widget.dateTime,
-        'jam': widget.valueJam,
-        'jumlah_kursi': widget.valueKursi,
-        'total': widget.totalBayar,
-        'user_id': SpUtil.getString('id'),
-        'file': image.toString(),
-        'status': 'Masuk',
-      },
-      // headers: {
-      //   'Accept': 'application/json',
-      //   'Content-Type': 'application/json'
-      // },
-    );
+        Uri.parse(
+            'https://9783-202-67-34-28.ap.ngrok.io/surya-travel/public/api/order/store'),
+        body: {
+          'tujuan': widget.valueTujuan,
+          'tanggal_berangkat': widget.dateTime.replaceAll('00:00:00', ''),
+          'jam': widget.valueJam,
+          'jumlah_kursi': widget.valueKursi,
+          'total': widget.totalBayar,
+          'user_id': SpUtil.getString('id'),
+          'file': image.toString(),
+          'status': 'Masuk',
+        });
 
     if (response.statusCode == 200) {
       // showDialog(
@@ -437,14 +425,9 @@ class _UploadBuktiPageState extends State<UploadBuktiPage> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              'Antrian Verifikasi Pembayaran : ',
+                              'Antrian Verifikasi Pembayaran',
                               overflow: TextOverflow.ellipsis,
                               style: warnaHitamStyle.copyWith(fontSize: 14),
-                            ),
-                            Text(
-                              '1',
-                              style: warnaHitamStyle.copyWith(fontSize: 14),
-                              overflow: TextOverflow.ellipsis,
                             ),
                           ],
                         ),

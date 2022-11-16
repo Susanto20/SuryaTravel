@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:surya_travel/pages/sign_in_page.dart';
+import 'package:surya_travel/services/service_api.dart';
 import 'package:surya_travel/theme.dart';
 import 'package:http/http.dart' as http;
+import 'package:sn_progress_dialog/progress_dialog.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({Key? key}) : super(key: key);
@@ -11,6 +13,7 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
+  bool isLoading = false;
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -266,26 +269,27 @@ class _SignUpPageState extends State<SignUpPage> {
             );
           });
     }
+
+    ProgressDialog progressDialog = ProgressDialog(context: context);
+    progressDialog.show(
+      max: 1,
+      msg: 'Loading',
+      backgroundColor: warnaPutih,
+      msgColor: warnaHitam,
+      progressValueColor: warnaBiru,
+    );
     final response = await http.post(
-      Uri.parse(
-          'https://bd67-202-67-35-22.ap.ngrok.io/surya-travel/public/api/user/register'),
+      Uri.parse(ServiceApi().getUrl + 'user/register'),
       body: {
         'name': name,
         'email': email,
         'password': password,
         'nomor_hp': nomor_hp,
       },
-      // headers: {
-      //   'Accept': 'application/json',
-      // },
     );
 
+    progressDialog.close();
     if (response.statusCode == 200) {
-      // Alert(
-      //         context: context,
-      //         title: 'Data Berhasil Disimpan',
-      //         type: AlertType.success)
-      //     .show();
       showDialog(
           context: context,
           builder: (context) {
@@ -315,11 +319,6 @@ class _SignUpPageState extends State<SignUpPage> {
             );
           });
     } else {
-      // Alert(
-      //         context: context,
-      //         title: 'Data Gagal Disimpan',
-      //         type: AlertType.error)
-      //     .show();
       showDialog(
           context: context,
           builder: (context) {

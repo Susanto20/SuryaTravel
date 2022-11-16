@@ -48,6 +48,10 @@ dependencies:
   rflutter_alert: ^2.0.4
   sp_util: ^2.0.3
   find_dropdown: ^1.0.0
+  intl: ^0.17.0
+  form_data: ^0.0.1
+  dio: ^4.0.6
+  sn_progress_dialog: ^1.0.8
 
 flutter_icons:
   android: "launcher_icon"

@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:surya_travel/pages/detail_order_page.dart';
+import 'package:surya_travel/services/service_api.dart';
 import 'package:surya_travel/theme.dart';
 import 'package:http/http.dart' as http;
 import 'package:sp_util/sp_util.dart';
@@ -16,8 +17,7 @@ class _HistoryOrderPageState extends State<HistoryOrderPage> {
   // String? valueTujuan;
   var uid = SpUtil.getString('id');
 
-  final String apiUrl =
-      "https://bd67-202-67-35-22.ap.ngrok.io/surya-travel/public/api/order/show?uid=";
+  final String apiUrl = ServiceApi().getUrl + "order/show?uid=";
 
   Future<List<dynamic>> _fecthDataUsers() async {
     var result = await http.get(Uri.parse(apiUrl + uid!));

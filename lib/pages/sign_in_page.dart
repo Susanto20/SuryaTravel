@@ -4,9 +4,11 @@ import 'package:sp_util/sp_util.dart';
 import 'package:surya_travel/models/login_model.dart';
 import 'package:surya_travel/pages/main_page.dart';
 import 'package:surya_travel/pages/sign_up_page.dart';
+import 'package:surya_travel/services/service_api.dart';
 import 'package:surya_travel/theme.dart';
 import 'dart:async';
 import 'dart:convert';
+import 'package:sn_progress_dialog/progress_dialog.dart';
 
 class SignInPage extends StatefulWidget {
   @override
@@ -207,15 +209,23 @@ class _SignInPageState extends State<SignInPage> {
       return;
     }
 
+    ProgressDialog progressDialog = ProgressDialog(context: context);
+    progressDialog.show(
+      max: 1,
+      msg: 'Loading',
+      backgroundColor: warnaPutih,
+      msgColor: warnaHitam,
+      progressValueColor: warnaBiru,
+    );
     final response = await http.post(
-      Uri.parse(
-          'https://bd67-202-67-35-22.ap.ngrok.io/surya-travel/public/api/login'),
+      Uri.parse(ServiceApi().getUrl + 'login'),
       body: {
         'email': emailController.text,
         'password': passwordController.text,
       },
     );
 
+    progressDialog.close();
     if (response.statusCode == 200) {
       final loginModel = loginModelFromJson(response.body);
       // print(loginModol.data.token);
@@ -232,7 +242,7 @@ class _SignInPageState extends State<SignInPage> {
       SpUtil.putString('name', loginModel.data!.user.name!);
       SpUtil.putString('nomor_hp', loginModel.data!.user.nomor_hp!);
       SpUtil.putString('id', loginModel.data!.user.id.toString());
-      Navigator.push(
+      Navigator.pushReplacement(
         context,
         MaterialPageRoute(
           builder: (context) {
