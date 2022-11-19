@@ -113,7 +113,7 @@ class _DetailOrderPageState extends State<DetailOrderPage> {
             IconButton(
               icon: const Icon(Icons.check),
               onPressed: () {
-                Navigator.push(
+                Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
                     builder: (context) {

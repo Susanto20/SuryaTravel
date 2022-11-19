@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-Color warnaBiru = Color(0xff3AA0CB);
+Color warnaBiru = Color(0xff02018D);
 Color warnaAbu = Color(0xffF2FAF9);
 Color textAbu = Color(0xff949191);
 Color warnaPutih = Color(0xffE5E5E5);
@@ -8,7 +8,7 @@ Color warnaHitam = Colors.black;
 
 TextStyle warnaBiruStyle = TextStyle(
   fontFamily: 'Poppins',
-  color: Color(0xff3AA0CB),
+  color: Color(0xff02018D),
 );
 
 TextStyle warnaAbuStyle = TextStyle(

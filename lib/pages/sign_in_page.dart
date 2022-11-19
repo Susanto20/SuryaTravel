@@ -48,7 +48,7 @@ class _SignInPageState extends State<SignInPage> {
               height: 220,
               width: 430,
               child: Image.asset(
-                'assets/images/travel.png',
+                'assets/images/Logo Surya.png',
               ),
             ),
             SizedBox(

@@ -39,7 +39,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 height: 200,
                 width: 300,
                 child: Image.asset(
-                  'assets/images/travel.png',
+                  'assets/images/Logo Surya.png',
                 ),
               ),
             ),

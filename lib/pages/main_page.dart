@@ -217,7 +217,7 @@ class _MainPageState extends State<MainPage> {
               Container(
                 width: double.infinity,
                 height: 80,
-                color: Color(0xff3AA0CB),
+                color: Color(0xff02018D),
                 alignment: Alignment.bottomLeft,
                 child: Padding(
                   child: Text(
@@ -695,7 +695,7 @@ class _MainPageState extends State<MainPage> {
       'total': totalBayar.toString(),
       'user_id': SpUtil.getString('id'),
       // 'file': image.toString(),
-      'status': 'Masuk',
+      'status': 'Terkirim',
     });
 
     progressDialog.close();
@@ -785,9 +785,10 @@ class _MainPageState extends State<MainPage> {
                             );
                           },
                           child: Container(
-                            height: 90,
+                            height: 70,
+                            width: 50,
                             child: Image.asset(
-                              'assets/images/checklist.png',
+                              'assets/images/check.png',
                             ),
                           ),
                         ),
