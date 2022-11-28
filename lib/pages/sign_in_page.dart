@@ -107,6 +107,7 @@ class _SignInPageState extends State<SignInPage> {
                     height: 5,
                   ),
                   TextFormField(
+                    obscureText: true,
                     controller: passwordController,
                     style: textAbuStyle,
                     decoration: InputDecoration.collapsed(

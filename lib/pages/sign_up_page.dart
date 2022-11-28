@@ -99,6 +99,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     height: 5,
                   ),
                   TextFormField(
+                    keyboardType: TextInputType.number,
                     textCapitalization: TextCapitalization.words,
                     controller: nomorHpController,
                     style: textAbuStyle,
@@ -169,6 +170,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     height: 5,
                   ),
                   TextFormField(
+                    obscureText: true,
                     controller: passwordController,
                     style: textAbuStyle,
                     decoration: InputDecoration.collapsed(
