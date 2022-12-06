@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:surya_travel/pages/main_page.dart';
 import 'package:surya_travel/theme.dart';
+import 'package:sp_util/sp_util.dart';
 
 class EditProfilePage extends StatefulWidget {
   const EditProfilePage({Key? key}) : super(key: key);
@@ -11,8 +12,10 @@ class EditProfilePage extends StatefulWidget {
 }
 
 class _EditProfilePageState extends State<EditProfilePage> {
-  TextEditingController namaController = TextEditingController();
-  TextEditingController hpController = TextEditingController();
+  TextEditingController namaController =
+      TextEditingController(text: SpUtil.getString('name'));
+  TextEditingController hpController =
+      TextEditingController(text: SpUtil.getString('nomor_hp'));
   TextEditingController alamatController = TextEditingController();
 
   _updateNama(updateNama) async {
@@ -80,7 +83,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         child: Container(
                           height: 70,
                           child: Image.asset(
-                            'assets/images/checklist.png',
+                            'assets/images/check.png',
                           ),
                         ),
                       ),
@@ -134,10 +137,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   children: [
                     Row(
                       children: [
-                        const Icon(Icons.lock),
-                        const SizedBox(
-                          width: 10,
-                        ),
+                        // const Icon(Icons.lock),
+                        // const SizedBox(
+                        //   width: 10,
+                        // ),
                         Text(
                           'Nama',
                           style: warnaHitamStyle,
@@ -163,14 +166,14 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   children: [
                     Row(
                       children: [
-                        const Icon(
-                          Icons.phone,
-                        ),
-                        const SizedBox(
-                          width: 10,
-                        ),
+                        // const Icon(
+                        //   Icons.phone,
+                        // ),
+                        // const SizedBox(
+                        //   width: 10,
+                        // ),
                         Text(
-                          'Handphone',
+                          'Nomor Hp',
                           style: warnaHitamStyle,
                         )
                       ],
@@ -186,35 +189,35 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   ],
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 25,
-                ),
-                child: Column(
-                  children: [
-                    Row(
-                      children: [
-                        const Icon(Icons.location_on),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        Text(
-                          'Alamat',
-                          style: warnaHitamStyle,
-                        )
-                      ],
-                    ),
-                    TextField(
-                      textCapitalization: TextCapitalization.words,
-                      controller: alamatController,
-                      maxLength: 25,
-                      decoration: InputDecoration(
-                        hintStyle: warnaHitamStyle,
-                      ),
-                    )
-                  ],
-                ),
-              ),
+              // Padding(
+              //   padding: const EdgeInsets.symmetric(
+              //     horizontal: 25,
+              //   ),
+              //   child: Column(
+              //     children: [
+              //       Row(
+              //         children: [
+              //           const Icon(Icons.location_on),
+              //           const SizedBox(
+              //             width: 10,
+              //           ),
+              //           Text(
+              //             'Alamat',
+              //             style: warnaHitamStyle,
+              //           )
+              //         ],
+              //       ),
+              //       TextField(
+              //         textCapitalization: TextCapitalization.words,
+              //         controller: alamatController,
+              //         maxLength: 25,
+              //         decoration: InputDecoration(
+              //           hintStyle: warnaHitamStyle,
+              //         ),
+              //       )
+              //     ],
+              //   ),
+              // ),
             ],
           ),
           const SizedBox(
